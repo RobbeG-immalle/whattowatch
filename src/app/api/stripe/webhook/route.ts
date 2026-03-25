@@ -5,7 +5,8 @@ import { headers } from 'next/headers';
 
 export async function POST(request: Request) {
   const body = await request.text();
-  const signature = headers().get('stripe-signature');
+  const headersList = await headers();
+  const signature = headersList.get('stripe-signature');
 
   if (!signature) {
     return NextResponse.json({ error: 'No signature' }, { status: 400 });
