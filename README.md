@@ -57,6 +57,7 @@ Fill in `.env`:
 | Variable | Where to get it |
 |---|---|
 | `DATABASE_URL` | [Neon](https://neon.tech) or [Supabase](https://supabase.com) |
+| `DIRECT_URL` | Supabase only — see note below |
 | `NEXTAUTH_SECRET` | Run `openssl rand -base64 32` |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | [Google Cloud Console](https://console.cloud.google.com) |
 | `GITHUB_ID` / `GITHUB_SECRET` | [GitHub Developer Settings](https://github.com/settings/developers) |
@@ -64,6 +65,12 @@ Fill in `.env`:
 | `TMDB_API_KEY` | [TMDB](https://www.themoviedb.org/settings/api) (free) |
 | `STRIPE_SECRET_KEY` / `STRIPE_PUBLISHABLE_KEY` | [Stripe Dashboard](https://dashboard.stripe.com/apikeys) |
 | `STRIPE_WEBHOOK_SECRET` | [Stripe Webhooks](https://dashboard.stripe.com/webhooks) |
+
+> **Supabase users:** Supabase exposes two connection strings — a **connection pooler** (port `6543`) and a **direct connection** (port `5432`). Prisma requires the direct connection to run `prisma db push` or migrations, while the pooler is recommended for runtime queries in serverless environments like Vercel.
+>
+> Set `DATABASE_URL` to the **pooler URL** (port `6543`) and `DIRECT_URL` to the **direct connection URL** (port `5432`). Both strings are available in your Supabase project under **Settings → Database → Connection string**.
+>
+> **Neon / self-hosted Postgres users:** Set both `DATABASE_URL` and `DIRECT_URL` to the same connection string.
 
 ### 4. Initialize the Database
 
